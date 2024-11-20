@@ -40,4 +40,26 @@ public class AlgorithmController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = algorithmModel.Id }, algorithmModel.ToAlgorithmDto());
     }
 
+    [HttpPut]
+    [Route("{id}")]
+    public IActionResult Update([FromRoute] int id, [FromBody] UpdateAlgorithmDto algorithmDto)
+    {
+        var algorithm = _context.Algorithms.FirstOrDefault(x => x.Id == id);
+        if(algorithm == null) return NotFound();
+        algorithm.Desc = algorithmDto.Desc;
+        algorithm.Content = algorithmDto.Content;
+        _context.SaveChanges();
+        return Ok(algorithm.ToAlgorithmDto());
+    }
+    
+    [HttpDelete]
+    [Route("{id}")]
+    public IActionResult Delete([FromRoute] int id)
+    {
+        var algorithm = _context.Algorithms.FirstOrDefault(x => x.Id == id);
+        if(algorithm == null) return NotFound();
+        _context.Remove(algorithm);
+        _context.SaveChanges();
+        return NoContent();
+    }
 }
