@@ -13,7 +13,16 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:3000") // 这里的端口是 React 开发服务器的端口
+                .AllowAnyHeader()
+                .AllowAnyMethod().AllowCredentials();
+        });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,6 +36,7 @@ app.UseHttpsRedirection();
 
 
 app.MapControllers();
+app.UseCors("AllowReactApp");
 
 app.Run();
 
