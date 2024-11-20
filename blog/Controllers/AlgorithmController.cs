@@ -1,4 +1,6 @@
 using blog.Data;
+using blog.Dtos.Algorithm;
+using blog.Mappers;
 using blog.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +19,7 @@ public class AlgorithmController : ControllerBase
     [HttpGet]
     public IActionResult GetAll()
     {
-        var algorithms = _context.Algorithms.ToList();
+        var algorithms = _context.Algorithms.ToList().Select(s=>s.ToAlgorithmDto());
         return Ok(algorithms);
     }
     
@@ -26,6 +28,16 @@ public class AlgorithmController : ControllerBase
     {
         var algorithm = _context.Algorithms.Find(id);
         if(algorithm == null) return NotFound();
-        return Ok(algorithm);
+        return Ok(algorithm.ToAlgorithmDto());
     }
+
+    [HttpPost]
+    public IActionResult Create([FromBody] CreateAlgorithmDto algorithmDto)
+    {
+        var algorithmModel = algorithmDto.ToAlgorithmFromCreateAlgorithmDto();
+        _context.Algorithms.Add(algorithmModel);
+        _context.SaveChanges();
+        return CreatedAtAction(nameof(GetById), new { id = algorithmModel.Id }, algorithmModel.ToAlgorithmDto());
+    }
+
 }

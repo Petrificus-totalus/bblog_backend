@@ -4541,6 +4541,7 @@
       "packagesPath": "/Users/jinnanhao/.nuget/packages/",
       "outputPath": "/Users/jinnanhao/RiderProjects/blog/blog/obj/",
       "projectStyle": "PackageReference",
+      "UsingMicrosoftNETSdk": false,
       "configFilePaths": [
         "/Users/jinnanhao/.nuget/NuGet/NuGet.Config"
       ],
