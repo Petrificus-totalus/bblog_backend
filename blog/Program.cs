@@ -16,6 +16,8 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddScoped<IAlgorithmRepository, AlgorithmRepository>();
+builder.Services.AddScoped<IAlgoTagRepository, AlgoTagRepository>();
+
 
 builder.Services.AddCors(options =>
 {
