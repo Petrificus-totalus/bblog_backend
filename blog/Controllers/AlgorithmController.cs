@@ -1,5 +1,6 @@
 using blog.Data;
 using blog.Dtos.Algorithm;
+using blog.Interfaces;
 using blog.Mappers;
 using blog.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -12,15 +13,18 @@ namespace blog.Controllers;
 public class AlgorithmController : ControllerBase
 {
     private readonly ApplicationDBContext _context;
-    public AlgorithmController(ApplicationDBContext context)
+    private readonly IAlgorithmRepository _algorithmRepo;
+
+    public AlgorithmController(ApplicationDBContext context, IAlgorithmRepository algorithmRepo)
     {
         _context = context;
+        _algorithmRepo = algorithmRepo;
     }
 
-    [HttpGet]
+    [HttpGet]  
     public async Task<IActionResult> GetAll()
     {
-        var algorithms = await _context.Algorithms.ToListAsync();
+        var algorithms = await _algorithmRepo.GetAllAsync();
         var algorithmDto = algorithms.Select(s=>s.ToAlgorithmDto());
         return Ok(algorithmDto);
     }

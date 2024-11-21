@@ -1,4 +1,6 @@
 using blog.Data;
+using blog.Interfaces;
+using blog.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,8 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddScoped<IAlgorithmRepository, AlgorithmRepository>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
