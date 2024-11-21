@@ -8,6 +8,6 @@
    appsettings.json -> ConnectionStrings     "Data Source=localhost;Initial Catalog=finshark;User Id=sa;Password=MyPass@word;Integrated Security=True;TrustServerCertificate=true;Trusted_Connection=false"
 4. controllers
    program.cs -> builder.Services.AddControllers();  &  app.MapControllers();
-5. interface
-   repositpry
+5. interfaces
+   repository
    builder.Services.AddScoped<IReactRepo, ReactRepo>();
