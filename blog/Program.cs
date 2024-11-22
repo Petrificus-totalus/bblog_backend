@@ -17,7 +17,8 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 });
 builder.Services.AddScoped<IAlgorithmRepository, AlgorithmRepository>();
 builder.Services.AddScoped<IAlgoTagRepository, AlgoTagRepository>();
-
+builder.Services.AddScoped<ISwallowRepository, SwallowRepository>();
+builder.Services.AddScoped<ISwallowLinksRepository, SwallowLinksRepository>();
 
 builder.Services.AddCors(options =>
 {
@@ -29,6 +30,8 @@ builder.Services.AddCors(options =>
                 .AllowAnyMethod().AllowCredentials();
         });
 });
+builder.Services.AddControllers().AddNewtonsoftJson(options => { options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore; });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
