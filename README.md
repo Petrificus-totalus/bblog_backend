@@ -11,3 +11,6 @@
 5. interfaces
    repository
    builder.Services.AddScoped<IReactRepo, ReactRepo>();
+
+
+1. Includes  program.cs -> builder.Services.AddControllers().AddNewtonsoftJson(options => { options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore; });
