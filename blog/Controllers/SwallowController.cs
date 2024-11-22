@@ -21,13 +21,15 @@ public class SwallowController: ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
+        if(!ModelState.IsValid) return BadRequest(ModelState);
         var swallows = await _swallRepo.GetAllAsync();
         var swallowsDto = swallows.Select(s => s.ToSwallowDto());
         return Ok(swallowsDto);
     }
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
+        if(!ModelState.IsValid) return BadRequest(ModelState);
         var swallow = await _swallRepo.GetByIdAsync(id);
         if(swallow == null) return NotFound();
         return Ok(swallow.ToSwallowDetailDto());
@@ -36,6 +38,7 @@ public class SwallowController: ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateSwallowDto swallowModel)
     {
+        if(!ModelState.IsValid) return BadRequest(ModelState);
         var swallow = swallowModel.ToSwallowFromCreateSwallowDto();
         await _swallRepo.CreateAsync(swallow);
         return CreatedAtAction(nameof(GetById), new { id = swallow.Id }, swallow.ToSwallowDto());

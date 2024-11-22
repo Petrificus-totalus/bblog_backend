@@ -18,7 +18,7 @@ public class SwallowRepository: ISwallowRepository
         return await _context.Swallow.Include(c=>c.Links).ToListAsync();
     }
 
-    public async Task<Swallow> GetByIdAsync(int id)
+    public async Task<Swallow> GetByIdAsync(int id) 
     {
         return await _context.Swallow.Include(c=>c.Links).FirstOrDefaultAsync(x=>x.Id == id);
     }

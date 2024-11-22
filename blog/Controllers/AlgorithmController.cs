@@ -29,7 +29,7 @@ public class AlgorithmController : ControllerBase
         return Ok(algorithmDto);
     }
     
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
         var algorithm = await _algorithmRepo.GetByIdAsync(id);
@@ -46,7 +46,7 @@ public class AlgorithmController : ControllerBase
     }
 
     [HttpPut]
-    [Route("{id}")]
+    [Route("{id:int}")]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateAlgorithmDto algorithmDto)
     {
         var algorithm = await _algorithmRepo.UpdateAsync(id, algorithmDto);
@@ -55,7 +55,7 @@ public class AlgorithmController : ControllerBase
     }
     
     [HttpDelete]
-    [Route("{id}")]
+    [Route("{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
         var algorithm = await _algorithmRepo.DeleteAsync(id);
