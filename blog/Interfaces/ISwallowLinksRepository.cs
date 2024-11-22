@@ -5,5 +5,9 @@ namespace blog.Interfaces;
 public interface ISwallowLinksRepository
 {
     Task<List<SwallowLink>> GetAllAsync();
-    Task<SwallowLink> GetByIdAsync(int id);
+    Task<SwallowLink?> GetByIdAsync(int id);
+    
+    Task<SwallowLink> CreateAsync(SwallowLink link);
+    Task<SwallowLink?> DeleteAsync(int id);
+    
 }

@@ -14,4 +14,12 @@ public static class SwallowLinkMapper
             SwallowId = link.SwallowId,
         };
     }
+    public static SwallowLink ToSwallowLinkFromCreate(this CreateLinkDto link,int swallowId)
+    {
+        return new SwallowLink
+        {
+            Link = link.Link,
+            SwallowId = swallowId
+        };
+    }
 }

@@ -7,6 +7,6 @@ public interface ISwallowRepository
     Task<List<Swallow>> GetAllAsync();
     Task<Swallow> GetByIdAsync(int id);
     Task<Swallow> CreateAsync(Swallow swallowModel);
-    
 
+    Task<bool> SwallowExist(int id);
 }

@@ -21,4 +21,20 @@ public class SwallowLinksRepository: ISwallowLinksRepository
     {
         return await _context.SwallowLinks.FindAsync(id);
     }
+
+    public async Task<SwallowLink> CreateAsync(SwallowLink link)
+    {
+        await _context.SwallowLinks.AddAsync(link);
+        await _context.SaveChangesAsync();
+        return link;
+    }
+
+    public async Task<SwallowLink?> DeleteAsync(int id)
+    {
+       var swallowLinkModel = await  _context.SwallowLinks.FirstOrDefaultAsync(x => x.Id == id);
+       if(swallowLinkModel == null) return null;
+       _context.SwallowLinks.Remove(swallowLinkModel);
+       await _context.SaveChangesAsync();
+       return swallowLinkModel;
+    }
 }

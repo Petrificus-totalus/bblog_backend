@@ -29,4 +29,9 @@ public class SwallowRepository: ISwallowRepository
         await _context.SaveChangesAsync();
         return swallowModel;
     }
+
+    public Task<bool> SwallowExist(int id)
+    {
+       return _context.Swallow.AnyAsync(s=>s.Id == id);
+    }
 }
