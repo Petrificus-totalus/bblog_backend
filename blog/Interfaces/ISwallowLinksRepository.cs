@@ -9,5 +9,7 @@ public interface ISwallowLinksRepository
     
     Task<SwallowLink> CreateAsync(SwallowLink link);
     Task<SwallowLink?> DeleteAsync(int id);
+    Task<SwallowLink> UpdateAsync(int swallowLinkId, SwallowLink link);
+    
     
 }

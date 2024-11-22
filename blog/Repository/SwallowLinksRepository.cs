@@ -31,10 +31,19 @@ public class SwallowLinksRepository: ISwallowLinksRepository
 
     public async Task<SwallowLink?> DeleteAsync(int id)
     {
-       var swallowLinkModel = await  _context.SwallowLinks.FirstOrDefaultAsync(x => x.Id == id);
+       var swallowLinkModel = await _context.SwallowLinks.FirstOrDefaultAsync(x => x.Id == id);
        if(swallowLinkModel == null) return null;
        _context.SwallowLinks.Remove(swallowLinkModel);
        await _context.SaveChangesAsync();
        return swallowLinkModel;
+    }
+
+    public async Task<SwallowLink> UpdateAsync(int swallowLinkId, SwallowLink link)
+    {
+        var swallowLinkModel = await _context.SwallowLinks.FindAsync(swallowLinkId);
+        if(swallowLinkModel == null) return null;
+        swallowLinkModel.Link = link.Link;
+        await _context.SaveChangesAsync();
+        return swallowLinkModel;
     }
 }

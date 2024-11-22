@@ -49,6 +49,15 @@ public class SwallowLinkController: ControllerBase
        return CreatedAtAction(nameof(GetById), new { id = swallowLink.Id }, swallowLink.ToSwallowLinkDto());
     }
     
+    [HttpPut("{swallowLinkId:int}")]
+    public async Task<IActionResult> Update([FromRoute] int swallowLinkId, CreateLinkDto linkDto)
+    { 
+        if(!ModelState.IsValid) return BadRequest(ModelState);
+        var swallowLink = await _swallowLinkRepo.UpdateAsync(swallowLinkId, linkDto.ToSwallowLinkFromCreate(swallowLinkId));
+        if(swallowLink == null) return NotFound();
+        return  Ok(swallowLink.ToSwallowLinkDto());
+    }
+    
     
     [HttpDelete]
     [Route("{id:int}")]
