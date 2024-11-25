@@ -19,6 +19,8 @@ builder.Services.AddScoped<IAlgorithmRepository, AlgorithmRepository>();
 builder.Services.AddScoped<IAlgoTagRepository, AlgoTagRepository>();
 builder.Services.AddScoped<ISwallowRepository, SwallowRepository>();
 builder.Services.AddScoped<ISwallowLinksRepository, SwallowLinksRepository>();
+builder.Services.AddScoped<ISpendRepository, SpendRepository>();
+
 
 builder.Services.AddCors(options =>
 {
@@ -46,6 +48,5 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 app.UseCors("AllowReactApp");
-
 app.Run();
 
