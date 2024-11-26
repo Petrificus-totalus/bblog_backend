@@ -20,18 +20,20 @@ builder.Services.AddScoped<IAlgoTagRepository, AlgoTagRepository>();
 builder.Services.AddScoped<ISwallowRepository, SwallowRepository>();
 builder.Services.AddScoped<ISwallowLinksRepository, SwallowLinksRepository>();
 builder.Services.AddScoped<ISpendRepository, SpendRepository>();
+builder.Services.AddScoped<ISpendChartRepository, SpendChartRepository>();
 
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowReactApp",
-        builder =>
-        {
-            builder.WithOrigins("http://localhost:3000") // 这里的端口是 React 开发服务器的端口
-                .AllowAnyHeader()
-                .AllowAnyMethod().AllowCredentials();
-        });
-});
+
+// builder.Services.AddCors(options =>
+// {
+//     options.AddPolicy("AllowReactApp",
+//         builder =>
+//         {
+//             builder.WithOrigins("http://localhost:8080") // 这里的端口是 React 开发服务器的端口
+//                 .AllowAnyHeader()
+//                 .AllowAnyMethod().AllowCredentials();
+//         });
+// });
 builder.Services.AddControllers().AddNewtonsoftJson(options => { options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore; });
 
 var app = builder.Build();
@@ -44,9 +46,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors(x=> x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin=>true));
 
 app.MapControllers();
-app.UseCors("AllowReactApp");
+
+// app.UseCors("AllowReactApp");
 app.Run();
 
