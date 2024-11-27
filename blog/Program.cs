@@ -16,7 +16,7 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddScoped<IAlgorithmRepository, AlgorithmRepository>();
-builder.Services.AddScoped<IAlgoTagRepository, AlgoTagRepository>();
+builder.Services.AddScoped<IAlgoLabelRepository, AlgoLabelRepository>();
 builder.Services.AddScoped<ISwallowRepository, SwallowRepository>();
 builder.Services.AddScoped<ISwallowLinksRepository, SwallowLinksRepository>();
 builder.Services.AddScoped<ISpendRepository, SpendRepository>();

@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace blog.Repository;
 
-public class AlgoTagRepository: IAlgoTagRepository
+public class AlgoLabelRepository: IAlgoLabelRepository
 {
     private readonly ApplicationDBContext _context;
-    public AlgoTagRepository(ApplicationDBContext DBContext)
+    public AlgoLabelRepository(ApplicationDBContext DBContext)
     {
         _context = DBContext;
     }
-    public async Task<List<AlgoTag>> GetAllAsync()
+    public async Task<List<Label>> GetAllAsync()
     {
-        return await _context.AlgoTags.ToListAsync();
+        return await _context.Labels.ToListAsync();
     }
 }

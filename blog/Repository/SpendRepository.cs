@@ -1,4 +1,5 @@
 using blog.Data;
+using blog.Dtos;
 using blog.Dtos.Picture;
 using blog.Dtos.Spend;
 using blog.Interfaces;
@@ -16,7 +17,7 @@ public class SpendRepository: ISpendRepository
     {
         _context = context;
     }
-    public async Task<List<GroupedSpendDto>> GetAllAsync(int pageNumber, int pageSize)
+    public async Task<PagedResultDto<GroupedSpendDto>> GetAllAsync(int pageNumber, int pageSize)
     {
         int totalRecords = await _context.Spend
             .GroupBy(s => s.CreateTime.Date) // 按 CreateTime 日期分组
@@ -24,19 +25,23 @@ public class SpendRepository: ISpendRepository
 
         // 计算总页数
         int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
-        return await _context.Spend.Include(c => c.Pictures)
+        var spend =  await _context.Spend
             .Include(s => s.SpendTags) // 包含 SpendTags
             .ThenInclude(st => st.Tag).OrderBy(s => s.Id) // 按主键排序，确保一致性
             .GroupBy(s => s.CreateTime.Date) // 按 CreateTime 的日期部分分组
             .OrderByDescending(g => g.Key).Skip((pageNumber - 1) * pageSize) // 跳过前面的记录
             .Take(pageSize).Select(g=> new GroupedSpendDto
             {
-                TotalPages = totalPages,
                 CreateTime = g.Key,
                 Total = g.Sum(s => s.Price), // 计算总价
                 Items = g.Select(c=>c.ToSpendDto()).ToList()
             }).ToListAsync(); // 取指定数量的记录
-        
+        return new PagedResultDto<GroupedSpendDto>
+        {
+            TotalPages = totalPages,
+            Data = spend,
+        };
+
     }
 
     public async Task<Spend> CreateAsync(CreateSpendDto createSpendDto)

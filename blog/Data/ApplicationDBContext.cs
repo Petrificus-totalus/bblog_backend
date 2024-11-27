@@ -1,5 +1,6 @@
 using blog.Models;
 using Microsoft.EntityFrameworkCore;
+using Tag = blog.Models.Tag;
 
 namespace blog.Data;
 
@@ -11,7 +12,9 @@ public class ApplicationDBContext: DbContext
     }
     
     public DbSet<Algorithm> Algorithms { get; set; }
-    public DbSet<AlgoTag> AlgoTags { get; set; }
+    public DbSet<Label> Labels { get; set; }
+    public DbSet<AlgoLabel> AlgoLabels { get; set; }
+    
     public DbSet<Swallow> Swallow { get; set; }
     public DbSet<SwallowLink> SwallowLinks { get; set; }
     public DbSet<Spend> Spend { get; set; }
@@ -34,6 +37,19 @@ public class ApplicationDBContext: DbContext
             .HasOne(st => st.Tag)
             .WithMany(t => t.SpendTags)
             .HasForeignKey(st => st.TagId);
+        
+        modelBuilder.Entity<AlgoLabel>()
+            .HasKey(st => new { st.AlgorithmId, st.LabelId }); // 联合主键
+
+        modelBuilder.Entity<AlgoLabel>()
+            .HasOne(st => st.Algorithm)
+            .WithMany(s => s.AlgoLabels)
+            .HasForeignKey(st => st.AlgorithmId);
+
+        modelBuilder.Entity<AlgoLabel>()
+            .HasOne(st => st.Label)
+            .WithMany(t => t.AlgoLabels)
+            .HasForeignKey(st => st.LabelId);
 
         // 配置 Spend 和 Picture 的一对多关系
         modelBuilder.Entity<Picture>()

@@ -3,6 +3,7 @@ using blog.Dtos.Algorithm;
 using blog.Interfaces;
 using blog.Mappers;
 using blog.Models;
+using blog.Query;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,11 +23,10 @@ public class AlgorithmController : ControllerBase
     }
 
     [HttpGet]  
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] PaginationParams paginationParams)
     {
-        var algorithms = await _algorithmRepo.GetAllAsync();
-        var algorithmDto = algorithms.Select(s=>s.ToAlgorithmDto());
-        return Ok(algorithmDto);
+        var algorithms = await _algorithmRepo.GetAllAsync(paginationParams.PageNumber, paginationParams.PageSize);
+        return Ok(algorithms);
     }
     
     [HttpGet("{id:int}")]

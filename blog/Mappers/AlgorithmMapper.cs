@@ -11,7 +11,7 @@ public static class AlgorithmMapper
         {
             Id = algorithmModel.Id,
             Desc = algorithmModel.Desc,
-            Content = algorithmModel.Content,
+            Labels = algorithmModel.AlgoLabels.Select(c=>c.Label.ToAlgoLabelDto()).ToList(),
         };
     }
     public static Algorithm ToAlgorithmFromCreateAlgorithmDto(this CreateAlgorithmDto algorithmdto)

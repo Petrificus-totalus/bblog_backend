@@ -9,5 +9,5 @@ public class Algorithm
     public string Desc { get; set; } = string.Empty;
     [Column(TypeName = "varchar(max)")]
     public string Content { get; set; } = string.Empty;
-    public List<AlgoTag> Tags { get; set; } = new List<AlgoTag>();
+    public List<AlgoLabel> AlgoLabels { get; set; } = new List<AlgoLabel>();
 }
