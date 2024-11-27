@@ -22,4 +22,15 @@ public static class AlgorithmMapper
             Content = algorithmdto.Content,
         };
     }
+    public static AlgorithmDetailDto ToAlgorithmDetailDto(this Algorithm algorithmModel)
+    {
+        return new AlgorithmDetailDto
+        {
+            Id = algorithmModel.Id,
+            Desc = algorithmModel.Desc,
+            Content = algorithmModel.Content,
+            AlgoLabels = algorithmModel.AlgoLabels.Select(c=>c.Label.ToAlgoLabelDto()).ToList(),
+        };
+    }
+    
 }

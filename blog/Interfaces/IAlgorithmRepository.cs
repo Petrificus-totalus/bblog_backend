@@ -8,7 +8,7 @@ public interface IAlgorithmRepository
 {
     Task<PagedResultDto<AlgorithmDto>> GetAllAsync(int pageNumber, int pageSize);
     Task<Algorithm?> GetByIdAsync(int id);  // FirstOrDefault can be NULL
-    Task<Algorithm> CreateAsync(Algorithm algorithm);
+    Task<AlgorithmDto> CreateAsync(CreateAlgorithmDto algorithmDto);
     Task<Algorithm?> UpdateAsync(int id, UpdateAlgorithmDto algorithmDto);
     Task<Algorithm?> DeleteAsync(int id);
   

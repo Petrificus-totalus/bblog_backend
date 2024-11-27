@@ -25,6 +25,7 @@ public class AlgorithmRepository: IAlgorithmRepository
         var data = await _context.Algorithms
             .Include(c => c.AlgoLabels)
             .ThenInclude(c => c.Label)
+            .OrderByDescending(c => c.Id)
             .Skip((pageNumber - 1) * pageSize) // 跳过前面的记录
             .Take(pageSize) // 获取指定数量的记录
             .Select(g => g.ToAlgorithmDto()) // 转换为 DTO
@@ -40,14 +41,25 @@ public class AlgorithmRepository: IAlgorithmRepository
 
     public async Task<Algorithm?> GetByIdAsync(int id)
     {
-        return await _context.Algorithms.FindAsync(id);
+        var algorithm = await _context.Algorithms.Include(c => c.AlgoLabels)
+            .ThenInclude(c => c.Label).FirstOrDefaultAsync(c => c.Id == id);
+        return algorithm;
     }
 
-    public async Task<Algorithm> CreateAsync(Algorithm algorithmModel)
+    public async Task<AlgorithmDto> CreateAsync(CreateAlgorithmDto algorithmDto)
     {
+        var algorithmModel = algorithmDto.ToAlgorithmFromCreateAlgorithmDto();
         await  _context.Algorithms.AddAsync(algorithmModel);
         await _context.SaveChangesAsync();
-        return algorithmModel;
+        var labels = await _context.Labels.Where(l=>algorithmDto.Labels.Contains(l.Id)).ToListAsync();
+        var algoLabels = labels.Select(l => new AlgoLabel
+        {
+            AlgorithmId = algorithmModel.Id,
+            LabelId = l.Id,
+        });
+        await _context.AlgoLabels.AddRangeAsync(algoLabels);
+        await _context.SaveChangesAsync();
+        return algorithmModel.ToAlgorithmDto();
     }
 
     public async Task<Algorithm?> UpdateAsync(int id, UpdateAlgorithmDto algorithmDto)

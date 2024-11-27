@@ -34,15 +34,15 @@ public class AlgorithmController : ControllerBase
     {
         var algorithm = await _algorithmRepo.GetByIdAsync(id);
         if(algorithm == null) return NotFound();
-        return Ok(algorithm.ToAlgorithmDto());
+        return Ok(algorithm.ToAlgorithmDetailDto());
     }
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateAlgorithmDto algorithmDto)
     {
-        var algorithmModel = algorithmDto.ToAlgorithmFromCreateAlgorithmDto();
-        await _algorithmRepo.CreateAsync(algorithmModel);
-        return CreatedAtAction(nameof(GetById), new { id = algorithmModel.Id }, algorithmModel.ToAlgorithmDto());
+        var  algorithm = await _algorithmRepo.CreateAsync(algorithmDto);
+        if(algorithm == null) return BadRequest("Failed to create algorithm");
+        return Ok(algorithm);
     }
 
     [HttpPut]
