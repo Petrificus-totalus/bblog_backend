@@ -3,6 +3,7 @@ using blog.Dtos.Swallow;
 using blog.Interfaces;
 using blog.Mappers;
 using blog.Models;
+using blog.Query;
 using Microsoft.AspNetCore.Mvc;
 
 namespace blog.Controllers;
@@ -19,12 +20,11 @@ public class SwallowController: ControllerBase
         _swallRepo = swallRepo;
     }
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] PaginationParams paginationParams)
     {
         if(!ModelState.IsValid) return BadRequest(ModelState);
-        var swallows = await _swallRepo.GetAllAsync();
-        var swallowsDto = swallows.Select(s => s.ToSwallowDto());
-        return Ok(swallowsDto);
+        var swallows = await _swallRepo.GetAllAsync(paginationParams.PageNumber, paginationParams.PageSize);
+        return Ok(swallows);
     }
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById([FromRoute] int id)

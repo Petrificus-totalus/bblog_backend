@@ -15,7 +15,6 @@ public static class SwallowMapper
             Summary = swallowModel.Summary,
             CoverImage = swallowModel.CoverImage,
             CreateTime = swallowModel.CreateTime,
-            Links = swallowModel.Links.Select(c=>c.ToSwallowLinkDto()).ToList()
         };
     }
     public static SwallowDetailDto ToSwallowDetailDto(this Swallow swallowModel)
@@ -25,11 +24,11 @@ public static class SwallowMapper
             Id = swallowModel.Id,
             Rating = swallowModel.Rating,
             Restaurant = swallowModel.Restaurant,
-            Summary = swallowModel.Summary,
             Review = swallowModel.Review,
-            CoverImage = swallowModel.CoverImage,
-            CreateTime = swallowModel.CreateTime,
-        };
+            Links = new List<string> { swallowModel.CoverImage }
+                .Concat(swallowModel.Links.Select(c => c.Link))
+                .ToList()
+            };
     }
     public static Swallow ToSwallowFromCreateSwallowDto(this CreateSwallowDto swallowModel)
     {

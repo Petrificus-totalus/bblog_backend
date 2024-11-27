@@ -1,5 +1,9 @@
 using blog.Data;
+using blog.Dtos;
+using blog.Dtos.Algorithm;
+using blog.Dtos.Swallow;
 using blog.Interfaces;
+using blog.Mappers;
 using blog.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,9 +17,20 @@ public class SwallowRepository: ISwallowRepository
     {
         _context = dbContext;
     }
-    public async Task<List<Swallow>> GetAllAsync()
+    public async Task<PagedResultDto<SwallowDto>> GetAllAsync(int pageNumber, int pageSize)
     {
-        return await _context.Swallow.Include(c=>c.Links).ToListAsync();
+        int totalRecords = await _context.Swallow.CountAsync();
+        // 计算总页数
+        int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+        var data =  await _context.Swallow.OrderByDescending(c => c.Id)
+            .Skip((pageNumber - 1) * pageSize) // 跳过前面的记录
+            .Take(pageSize).Select(c=>c.ToSwallowDto()).ToListAsync();
+        return new PagedResultDto<SwallowDto>
+        {
+            TotalPages = totalPages,
+            Data = data
+        };
     }
 
     public async Task<Swallow> GetByIdAsync(int id) 

@@ -9,5 +9,5 @@ public class SwallowDto
     public string? Summary { get; set; } 
     public string? CoverImage { get; set; } 
     public DateTime CreateTime { get; set; } = DateTime.Now; 
-    public List<SwallowLinkDto> Links { get; set; }
+    
 }

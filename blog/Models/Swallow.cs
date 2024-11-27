@@ -16,7 +16,7 @@ public class Swallow
     [Column(TypeName = "decimal(3,1)")]
     public decimal Rating { get; set; } // 评分，1 位小数
 
-    [MaxLength(500)]
+    [MaxLength(200)]
     public string? Summary { get; set; } // 摘要，可为空，最大长度 500
 
     [Column(TypeName = "nvarchar(max)")]

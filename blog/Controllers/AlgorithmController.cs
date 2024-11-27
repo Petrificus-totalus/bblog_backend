@@ -2,10 +2,8 @@ using blog.Data;
 using blog.Dtos.Algorithm;
 using blog.Interfaces;
 using blog.Mappers;
-using blog.Models;
 using blog.Query;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace blog.Controllers;
 
