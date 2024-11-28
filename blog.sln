@@ -12,5 +12,6 @@ Global
 		{08965CAA-64BF-4206-AA10-02FE463DB299}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08965CAA-64BF-4206-AA10-02FE463DB299}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08965CAA-64BF-4206-AA10-02FE463DB299}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08965CAA-64BF-4206-AA10-02FE463DB299}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal
