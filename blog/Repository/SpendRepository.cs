@@ -50,11 +50,11 @@ public class SpendRepository: ISpendRepository
         await _context.Spend.AddAsync(spendModel);
         await _context.SaveChangesAsync();
         
-        if (createSpendDto.TagIds.Any())
+        if (createSpendDto.Tags.Any())
         {
             // 获取现有的 Tag 实体
             var tags = await _context.Tag
-                .Where(t => createSpendDto.TagIds.Contains(t.Id))
+                .Where(t => createSpendDto.Tags.Contains(t.Id))
                 .ToListAsync();
 
             // 创建 SpendTag 实体并指定 SpendId 和 TagId

@@ -23,7 +23,7 @@ public class CreateSpendDto
     public string? Description { get; set; } // 长文本描述
 
     // Tags 用于传递标签 ID 列表
-    public List<int> TagIds { get; set; } = new();
+    public List<int> Tags { get; set; } = new();
 
     // Pictures 用于传递图片链接列表
     public List<string> PictureLinks { get; set; } = new();

@@ -25,7 +25,7 @@ public static class SpendMapper
             Location = spendModel.Location,
             Title = spendModel.Title,
             CreateTime = spendModel.CreateTime.Date,
-            Tags = spendModel.SpendTags.Select(c=>c.ToTagDto()).ToList(),
+            Tags = spendModel.SpendTags.Select(c=>c.FromSpendTagToTagDto()).ToList(),
             HasDetail = !string.IsNullOrEmpty(spendModel.Description) || spendModel.Pictures.Any() // 判断条件
         };
     }
